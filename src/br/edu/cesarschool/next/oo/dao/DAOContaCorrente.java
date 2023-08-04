@@ -11,26 +11,10 @@ public class DAOContaCorrente {
 
     public boolean incluir(ContaCorrente conta){
         return daoGenerico.incluir(conta);
-//        ContaCorrente contaBusca = buscar(conta.getNumero());
-//        if(contaBusca != null){
-//            return false;
-//        }
-//        else{
-//            cadastro.incluir(conta, conta.getNumero());
-//            return true;
-//        }
     }
 
     public boolean alterar(ContaCorrente conta){
         return daoGenerico.alterar(conta);
-//        ContaCorrente contaBusca = buscar(conta.getNumero());
-//        if(contaBusca == null){
-//            return false;
-//        }
-//        else{
-//            cadastro.alterar(conta, conta.getNumero());
-//            return true;
-//        }
     }
 
     public boolean excluir(String numero){
@@ -39,7 +23,6 @@ public class DAOContaCorrente {
 
     public ContaCorrente buscar(String numero){
         return (ContaCorrente) daoGenerico.buscar(numero);
-//        return (ContaCorrente) cadastro.buscar(numero);
     }
 
     public ContaCorrente[] buscarTodos(){

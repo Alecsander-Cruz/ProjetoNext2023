@@ -95,6 +95,17 @@ public class MediatorContaCorrente {
         }
     }
 
+    public String excluir(String numero){
+        ContaCorrente conta = daoCC.buscar(numero);
+        if(conta == null){
+            return "Conta não existente!";
+        }
+        else{
+            daoCC.excluir(conta.obterChave());
+            return null;
+        }
+    }
+
     public ContaCorrente buscar(String numero){
         if(stringNulaOuVazia(numero)){
             return null;
