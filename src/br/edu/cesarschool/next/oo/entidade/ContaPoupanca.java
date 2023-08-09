@@ -1,12 +1,18 @@
 package br.edu.cesarschool.next.oo.entidade;
 
 public class ContaPoupanca extends ContaCorrente{
+
     private double percentualBonus;
 
     @Override
     public void creditar(double valor){
         double valorBonus = (valor * (1+percentualBonus/100));
         super.creditar(valorBonus);
+    }
+
+    @Override
+    public double obterAliquotaCpmf() {
+        return 0;
     }
 
     @Override

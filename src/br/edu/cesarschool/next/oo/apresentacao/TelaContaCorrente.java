@@ -1,5 +1,6 @@
 package br.edu.cesarschool.next.oo.apresentacao;
 
+import br.edu.cesarschool.next.oo.entidade.Conta;
 import br.edu.cesarschool.next.oo.entidade.ContaCorrente;
 import br.edu.cesarschool.next.oo.entidade.ContaPoupanca;
 import br.edu.cesarschool.next.oo.negocio.MediatorContaCorrente;
@@ -17,7 +18,7 @@ public class TelaContaCorrente {
 
         int opcao = 0;
 
-        while(opcao != 7){
+        while(opcao != 8){
             System.out.println("Escolha uma opção: ");
             System.out.println("1 - Registrar conta");
             System.out.println("2 - Creditar");
@@ -25,7 +26,8 @@ public class TelaContaCorrente {
             System.out.println("4 - Excluir");
             System.out.println("5 - Buscar conta");
             System.out.println("6 - Gerar relatório geral");
-            System.out.println("7 - Sair");
+            System.out.println("7 - Excluir Contas com Saldo zerado");
+            System.out.println("8 - Sair");
 
             opcao = ENTRADA.nextInt();
 
@@ -49,6 +51,9 @@ public class TelaContaCorrente {
                     gerarRelatorioGeral();
                     break;
                 case 7:
+                    excluirZeradas();
+                    break;
+                case 8:
                     System.out.println("Programa finalizado!");
                     break;
                 default:
@@ -176,5 +181,12 @@ public class TelaContaCorrente {
        else{
            System.out.println("Não existem contas cadastradas! \n");
        }
+    }
+
+    private void excluirZeradas(){
+        String mensagem = mediatorConta.excluirZeradas();
+        System.out.println(mensagem);
+
+        gerarRelatorioGeral();
     }
 }

@@ -1,17 +1,12 @@
 package br.edu.cesarschool.next.oo.entidade;
 
-public class ContaCorrente extends RegistroIdentificavel {
+public class ContaCorrente extends Conta {
     private static final long serialVersionUID = 1L;
     private String numero;
-    private double saldo;
     private String nomeCorrentista;
 
     public void creditar(double valor){
-        this.saldo += valor;
-    }
-
-    public void debitar(double valor){
-        this.saldo -= valor;
+        this.setSaldo(valor);
     }
 
     @Override
@@ -20,18 +15,27 @@ public class ContaCorrente extends RegistroIdentificavel {
     }
 
     @Override
+    public double obterAliquotaCpmf() {
+        return 0.30;
+    }
+
+    @Override
     public String toString() {
         String retorno = String.format("""
                 Número da conta:          %s
                 Saldo:                 R$ %.2f
                 Nome do Titular:          %s
-                """, numero, saldo, nomeCorrentista);
+                """, numero, this.getSaldo(), nomeCorrentista);
 
 
-        String retornoData = String.format("Data de criação da Conta: %d/%d/%d \n",
+        String retornoData = String.format("""
+                        Data de criação da Conta: %d/%d/%d
+                        Dias de conta criada:     %d
+                        """,
                 this.getDataHoraCriacao().getDayOfMonth(),
                 this.getDataHoraCriacao().getMonthValue(),
-                this.getDataHoraCriacao().getYear()
+                this.getDataHoraCriacao().getYear(),
+                this.obterTempoDeCriacao()
                 );
 
         return retorno + retornoData;
@@ -42,7 +46,7 @@ public class ContaCorrente extends RegistroIdentificavel {
 
     public ContaCorrente(String numero, double saldo, String nomeCorrentista) {
         this.numero = numero;
-        this.saldo = saldo;
+        this.setSaldo(saldo);
         this.nomeCorrentista = nomeCorrentista;
     }
 
@@ -52,10 +56,6 @@ public class ContaCorrente extends RegistroIdentificavel {
 
     public void setNumero(String numero) {
         this.numero = numero;
-    }
-
-    public double getSaldo() {
-        return saldo;
     }
 
     public String getNomeCorrentista() {

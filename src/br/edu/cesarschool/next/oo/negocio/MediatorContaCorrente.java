@@ -1,10 +1,12 @@
 package br.edu.cesarschool.next.oo.negocio;
 
 import br.edu.cesarschool.next.oo.dao.DAOContaCorrente;
+import br.edu.cesarschool.next.oo.entidade.Conta;
 import br.edu.cesarschool.next.oo.entidade.ContaCorrente;
 import br.edu.cesarschool.next.oo.entidade.ContaPoupanca;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -84,7 +86,7 @@ public class MediatorContaCorrente {
             if(conta == null){
                 return "Conta não existente";
             }
-            else if(conta.getSaldo() < valor){
+            else if(conta.getSaldo() < valor*(1+conta.obterAliquotaCpmf())){
                 return "Saldo insuficiente";
             }
             else{
@@ -122,6 +124,36 @@ public class MediatorContaCorrente {
         Collections.sort(listaContas, new ComparadorContaCorrenteSaldo());
 
         return listaContas;
+    }
+
+    public String excluirZeradas(){
+        ContaCorrente[] contas = daoCC.buscarTodos();
+        List<ContaCorrente> listaContas = Arrays.asList(contas);
+
+        List<ContaCorrente> excluir = new ArrayList<>();
+
+
+        for(ContaCorrente conta : listaContas ){
+            if(conta.getSaldo() == 0){
+                excluir.add(conta);
+                daoCC.excluir(conta.obterChave());
+            }
+        }
+
+        if(excluir.size() == 0){
+            return "Não haviam contas com saldo zerado!";
+        }
+        else{
+            String retorno = null;
+
+            if(excluir.size() == 1){
+                retorno = String.format("%d conta com saldo zerado foi excluída.", (excluir.size()));
+            }
+            else{
+                retorno = String.format("%d contas com saldo zerado foram excluídas.", (excluir.size()));
+            }
+            return retorno;
+        }
     }
 
     public boolean stringNulaOuVazia(String numero){ return numero == null || numero.trim().equals(""); }
